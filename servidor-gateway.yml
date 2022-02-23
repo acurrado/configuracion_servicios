@@ -1,0 +1,31 @@
+server:
+  port: 7000
+  cloud:
+    gateway:
+      routes:
+      - id: serv-vuelos
+        #lb:// cuando se va a acceder a través de Eureka
+        uri: lb://servicio-vuelos 
+        predicates:
+          - Path=/svuelos/**
+        filters: #sustituye la dirección svuelos por vacío cuando invoca al ms servicio-vuelos
+          - RewritePath=/svuelos/*, /     
+      - id: serv-hoteles
+        #lb:// cuando se va a acceder a través de Eureka
+        uri: lb://servicio-hoteles
+        predicates:
+        - Path=/shoteles/**
+        filters: #sustituye la dirección svuelos por vacío cuando invoca al ms servicio-vuelos porque el ms no tiene ese path
+        - RewritePath=/shoteles/*, /
+      - id: serv-reservas
+        #lb:// cuando se va a acceder a través de Eureka
+        uri: lb://servicio-reservas
+        predicates:
+        - Path=/sreservas/**
+        filters: #sustituye la dirección svuelos por vacío cuando invoca al ms servicio-vuelos porque el ms no tiene ese path
+        - RewritePath=/sreservas/*, /
+        
+eureka:
+  client:
+    service-url:
+      defaultZone: http://localhost:8761/eureka
