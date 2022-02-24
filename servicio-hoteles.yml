@@ -12,7 +12,7 @@ spring:
        
 #propiedades para que hibernate cree adecuadamente las instrucciones SQL
 server:
-  port: 8000  
+  port: 9000  
 
 eureka:
   client:
